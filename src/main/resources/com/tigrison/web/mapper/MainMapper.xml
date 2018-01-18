@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tigrison.web.mapper.MainMapper">
+<resultMap type="com.tigrison.web.domain.BoardDTO" id="board">
+		<result property="seq" column="seq"/>
+		<result property="title" column="title"/>		
+		<result property="content" column="content"/>		
+		<result property="createDt" column="create_dt"/>		
+		<result property="updateDt" column="update_dt"/>		
+	</resultMap>
+	<select id="selectOne"
+		resultMap="board" 
+		parameterType="com.tigrison.web.domain.BoardDTO">
+		SELECT * 
+		FROM t_board
+		WHERE seq LIKE #{seq}
+	</select>
+	
+	<select id="selectList"
+		resultMap="board" 
+		parameterType="com.tigrison.web.domain.BoardDTO">
+		SELECT * 
+		FROM t_board
+		ORDER BY seq DESC
+	</select>
+	
+	<insert id="insert" 
+		parameterType="com.tigrison.web.domain.BoardDTO">
+		INSERT INTO t_board(title, content, create_dt, update_dt)
+		VALUES(#{title}, #{content}, SYSDATE(), SYSDATE())
+    </insert>
+    
+	<update id="update"
+		parameterType="com.tigrison.web.domain.BoardDTO">
+		UPDATE t_board
+		SET title = #{title}, content = #{content}, update_dt = SYSDATE()
+		WHERE seq like #{seq}
+	</update>
+	
+	<delete id="delete"
+		parameterType="com.tigrison.web.domain.BoardDTO">
+		DELETE 
+		FROM t_board
+		WHERE seq like #{seq}
+	</delete>
+</mapper>
